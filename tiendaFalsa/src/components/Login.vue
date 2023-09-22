@@ -18,6 +18,8 @@
   </template>
   
   <script>
+  import axios from 'axios';
+  
   export default {
     data() {
       return {
@@ -27,11 +29,21 @@
     },
     methods: {
       login() {
-        if (this.username === 'usuario' && this.password === 'contraseña') {
+        // Realizar una solicitud Axios para autenticar al usuario
+        axios.post('https://fakestoreapi.com/auth/login', {
+          username: this.username,
+          password: this.password,
+        })
+        .then(response => {
+          // Manejar la respuesta aquí, por ejemplo, redirigir al usuario o mostrar un mensaje de éxito.
+          console.log(response.data);
           alert('Inicio de sesión exitoso');
-        } else {
+        })
+        .catch(error => {
+          // Manejar errores aquí, por ejemplo, mostrar un mensaje de error al usuario.
+          console.error('Error al iniciar sesión:', error);
           alert('Nombre de usuario o contraseña incorrectos');
-        }
+        });
       },
     },
   };
