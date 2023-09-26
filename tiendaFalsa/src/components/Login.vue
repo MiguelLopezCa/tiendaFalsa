@@ -35,7 +35,7 @@ const login = () => {
       username: username.value,
       password: password.value,
     })
-    .then((response) => {
+    .then((response) => {z
       router.push('/productos');
     })
     .catch((error) => {
