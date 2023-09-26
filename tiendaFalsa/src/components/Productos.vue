@@ -24,31 +24,24 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-export default {
-  data() {
-    return {
-      productos: [],
-    };
-  },
-  mounted() {
-    this.cargarProductos();
-  },
-  methods: {
-    cargarProductos() {
-      axios
-        .get('https://fakestoreapi.com/products')
-        .then((response) => {
-          this.productos = response.data;
-        })
-        .catch((error) => {
-          console.error('Error al obtener los productos:', error);
-        });
-    },
-  },
+const productos = ref([]);
+
+const cargarProductos = () => {
+  axios
+    .get('https://fakestoreapi.com/products')
+    .then((response) => {
+      productos.value = response.data;
+    })
+    .catch((error) => {
+      console.error('Error al obtener los productos:', error);
+    });
 };
+
+onMounted(cargarProductos);
 </script>
 
 <style scoped>
@@ -85,7 +78,6 @@ export default {
 .product-list {
   display: grid;
   text-align: start;
-
 }
 
 .product-card {
@@ -109,7 +101,6 @@ export default {
 
 .product-info h2 {
   margin-left: 20px; /* Espacio entre la imagen y el texto */
-
 }
 
 .product-info p {

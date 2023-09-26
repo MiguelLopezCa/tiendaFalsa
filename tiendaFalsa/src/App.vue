@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import principal from './views/Principal.vue';
-
 </script>
 
 <template>
-  <principal></principal>
-
+  <div>
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
