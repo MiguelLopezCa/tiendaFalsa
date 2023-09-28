@@ -25,6 +25,14 @@ const router = createRouter({
         title: 'Productos' // Metainformación para esta ruta
       }
     },
+    
+    {
+      path: '/agregar', // Ejemplo de otra ruta
+      component: () => import('../components/AgregarPro.vue'),
+      meta: {
+        title: 'Agregar Productos' // Metainformación para esta ruta
+      }
+    }
     // Puedes agregar más rutas aquí
   ]
 });

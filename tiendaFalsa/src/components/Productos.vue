@@ -4,7 +4,7 @@
       <h1>Lista de Productos</h1>
     </header>
     <nav class="nav">
-      <h1>hola</h1>
+      <button @click="agregarProductos()">Agregar Productos</button>
     </nav>
     <section class="section">
       <div class="product-list">
@@ -17,6 +17,10 @@
               <h2>{{ producto.title }}</h2>
               <p>Precio: ${{ producto.price }}</p>
             </div>
+            <div class="product-actions">
+              <button @click="modificarProducto(producto.id)">Modificar</button>
+              <button @click="eliminarProducto(producto.id)">Eliminar</button>
+            </div>
           </div>
         </div>
       </div>
@@ -27,8 +31,14 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const productos = ref([]);
+
+const agregarProductos = () => {
+  router.push('/agregar');
+};
 
 const cargarProductos = () => {
   axios
@@ -38,6 +48,25 @@ const cargarProductos = () => {
     })
     .catch((error) => {
       console.error('Error al obtener los productos:', error);
+    });
+};
+
+const modificarProducto = (id) => {
+  router.push('/agregar');
+};
+
+const eliminarProducto = (id) => {
+  fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: "DELETE"
+  })
+    .then(res => res.json())
+    .then(json => {
+      console.log(json);
+      cargarProductos();
+      alert("Producto eliminado")
+    })
+    .catch(error => {
+      console.error('Error al eliminar el producto:', error);
     });
 };
 
@@ -96,14 +125,23 @@ onMounted(cargarProductos);
 }
 
 .product-info {
-  margin-left: 20px; /* Espacio entre la imagen y el texto */
+  margin-left: 20px;
 }
 
 .product-info h2 {
-  margin-left: 20px; /* Espacio entre la imagen y el texto */
+  margin-left: 20px;
 }
 
 .product-info p {
   margin: 20px;
+}
+
+.product-actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-actions button {
+  margin-top: 10px;
 }
 </style>
