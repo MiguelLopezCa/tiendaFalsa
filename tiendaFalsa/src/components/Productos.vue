@@ -1,32 +1,3 @@
-<template>
-  <div class="container">
-    <header class="header">
-      <h1>Lista de Productos</h1>
-    </header>
-    <nav class="nav">
-      <button @click="agregarProductos()">Agregar Productos</button>
-    </nav>
-    <section class="section">
-      <div class="product-list">
-        <div class="product-card" v-for="producto in productos" :key="producto.id">
-          <div class="product-details">
-            <div class="product-image">
-              <img :src="producto.image" alt="Imagen del Producto" />
-            </div>
-            <div class="product-info">
-              <h2>{{ producto.title }}</h2>
-              <p>Precio: ${{ producto.price }}</p>
-            </div>
-            <div class="product-actions">
-              <button @click="modificarProducto(producto.id)">Modificar</button>
-              <button @click="eliminarProducto(producto.id)">Eliminar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -37,9 +8,8 @@ const router = useRouter();
 const productos = ref([]);
 
 const agregarProductos = () => {
-  router.push('/agregar');
-};
-
+      router.push('/agregar'); // Navega a la ruta '/agregar'
+    };
 const cargarProductos = () => {
   axios
     .get('https://fakestoreapi.com/products')
@@ -50,9 +20,8 @@ const cargarProductos = () => {
       console.error('Error al obtener los productos:', error);
     });
 };
-
 const modificarProducto = (id) => {
-  router.push('/agregar');
+  router.push('/modificar');
 };
 
 const eliminarProducto = (id) => {
@@ -69,9 +38,37 @@ const eliminarProducto = (id) => {
       console.error('Error al eliminar el producto:', error);
     });
 };
-
 onMounted(cargarProductos);
 </script>
+
+<template>
+  <div class="container">
+    <header class="header">
+      <h1>Lista de Productos</h1>
+    </header>
+    <nav class="nav">
+      <button @click="agregarProductos()">Agregar Productos</button>    </nav>
+    <section class="section">
+      <div class="product-list">
+        <div class="product-card" v-for="producto in productos" :key="producto.id">
+          <div class="product-details">
+            <div class="product-image">
+              <img :src="producto.image" alt="Imagen del Producto" />
+            </div>
+            <div class="product-info">
+              <h2>{{ producto.title }}</h2>
+              <p>Precio: ${{ producto.price }}</p>
+              <p>Descripcion: {{ producto.description }}</p>
+              <p>Categoria: {{ producto.category }}</p>
+            <button @click="modificarProducto(producto.id)">Modificar</button>
+            <button @click="eliminarProducto(producto.id)">Eliminar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
 
 <style scoped>
 .container {
@@ -125,23 +122,14 @@ onMounted(cargarProductos);
 }
 
 .product-info {
-  margin-left: 20px;
+  margin-left: 20px; /* Espacio entre la imagen y el texto */
 }
 
 .product-info h2 {
-  margin-left: 20px;
+  margin-left: 20px; /* Espacio entre la imagen y el texto */
 }
 
 .product-info p {
   margin: 20px;
-}
-
-.product-actions {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-actions button {
-  margin-top: 10px;
 }
 </style>

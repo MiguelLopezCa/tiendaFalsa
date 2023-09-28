@@ -50,7 +50,6 @@ const volver = () => {
 };
 
 const Guardar = async () => {
-  // Lógica para guardar el producto
   try {
     const response = await fetch('https://fakestoreapi.com/products', {
       method: 'POST',
@@ -62,7 +61,6 @@ const Guardar = async () => {
 
     if (response.ok) {
       alert('Producto guardado correctamente');
-      // Limpiar el formulario después de guardar
       producto.value = {
         title: '',
         price: '',
