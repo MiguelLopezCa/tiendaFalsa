@@ -32,14 +32,22 @@ const router = createRouter({
       meta: {
         title: 'Agregar Productos' // Metainformación para esta ruta
       }
-    },{
+    },
+    {
       path: '/modificar', // Ejemplo de otra ruta
       component: () => import('../components/ModificarPro.vue'),
       meta: {
         title: 'Agregar Productos' // Metainformación para esta ruta
       }
+    },
+    {
+      path: '/producto', // Ejemplo de otra ruta
+      component: () => import('../components/Producto.vue'),
+      meta: {
+        title: 'Agregar Productos' // Metainformación para esta ruta
+      }
     }
-    // Puedes agregar más rutas aquí
+  
   ]
 });
 

@@ -51,26 +51,6 @@
     router.push('/productos');
   };
   
-  const modificarProducto = async () => {
-  try {
-    const response = await axios.put(`https://fakestoreapi.com/products/7`, {
-      title: producto.title,
-      price: parseFloat(producto.price),
-      description: producto.description,
-      image: producto.image,
-      category: producto.category,
-    });
-
-    if (response.status === 200) {
-      alert('¡Producto modificado!');
-      router.push('/productos');
-    } else {
-      console.error('Error al modificar el producto');
-    }
-  } catch (error) {
-    console.error('Error en la solicitud:', error);
-  }
-};
   </script>
 
   <style scoped>

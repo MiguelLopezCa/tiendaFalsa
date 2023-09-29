@@ -3,7 +3,6 @@
     
     <div class="form-container">
       <h2 class="h" >Agregar Producto</h2>
-      <button class="close-button" @click="volver">X</button>
       <form @submit.prevent="Guardar()">
         <div class="form-group">
           <label for="title">Título:</label>
@@ -26,7 +25,7 @@
           <input type="url" id="image" v-model="producto.image" />
         </div>
         <div class="button-container">
-          <button type="submit" class="button">Agregar</button>
+          <button  type="submit" class="button">Agregar</button>
         </div>
       </form>
     </div>
@@ -67,7 +66,9 @@ const Guardar = async () => {
         description: '',
         image: '',
         category: '',
+        
       };
+      volver();
     } else {
       console.error('Error al guardar el producto');
     }

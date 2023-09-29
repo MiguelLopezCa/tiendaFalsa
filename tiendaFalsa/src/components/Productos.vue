@@ -3,12 +3,16 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import producto from '../components/Producto.vue' ;
 
 const router = useRouter();
 const productos = ref([]);
 
+const mostrarProductoNuevo = localStorage.getItem('mostrarProductoNuevo') === 'true';
+
 const agregarProductos = () => {
-      router.push('/agregar'); // Navega a la ruta '/agregar'
+      router.push('/agregar'); 
+      localStorage.setItem('mostrarProductoNuevo', 'true'); // Guarda el estado en localStorage
     };
 const cargarProductos = () => {
   axios
@@ -38,6 +42,10 @@ const eliminarProducto = (id) => {
       console.error('Error al eliminar el producto:', error);
     });
 };
+const quitarSesion = () => {
+  localStorage.removeItem('mostrarProductoNuevo'); // Elimina la clave 'mostrarProductoNuevo'
+  mostrarProductoNuevo = false; // Establece la variable en falso
+};
 onMounted(cargarProductos);
 </script>
 
@@ -47,8 +55,13 @@ onMounted(cargarProductos);
       <h1>Lista de Productos</h1>
     </header>
     <nav class="nav">
-      <button @click="agregarProductos()">Agregar Productos</button>    </nav>
+      <button @click="agregarProductos()">Agregar Productos</button>
+      <button @click="quitarSesion()">Reiniciar Productos</button>
+    </nav>
     <section class="section">
+      <div v-if="mostrarProductoNuevo" class="proNue">
+        <producto></producto>
+      </div>
       <div class="product-list">
         <div class="product-card" v-for="producto in productos" :key="producto.id">
           <div class="product-details">
@@ -58,10 +71,8 @@ onMounted(cargarProductos);
             <div class="product-info">
               <h2>{{ producto.title }}</h2>
               <p>Precio: ${{ producto.price }}</p>
-              <p>Descripcion: {{ producto.description }}</p>
-              <p>Categoria: {{ producto.category }}</p>
-            <button @click="modificarProducto(producto.id)">Modificar</button>
-            <button @click="eliminarProducto(producto.id)">Eliminar</button>
+              <p>Descripción: {{ producto.description }}</p>
+              <p>Categoría: {{ producto.category }}</p>
             </div>
           </div>
         </div>
@@ -99,6 +110,9 @@ onMounted(cargarProductos);
   grid-area: section;
   display: block;
   width: 77vw;
+}
+.proNue{
+  height: 240px;
 }
 
 .product-list {
