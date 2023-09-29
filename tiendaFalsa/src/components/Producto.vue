@@ -20,10 +20,16 @@
   
   <script setup>
   import { ref, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+
   import axios from 'axios';
-  
+  const router = useRouter();
+
   const producto = ref({});
-  
+
+  const modificarProducto = () => {
+      router.push('/productos');
+  }
   const cargarProducto = () => {
     axios
       .get('https://fakestoreapi.com/products/7')
