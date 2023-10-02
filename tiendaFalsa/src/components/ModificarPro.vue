@@ -2,7 +2,6 @@
     <div class="product-container">
       <div class="form-container">
         <h2 class="h">Modificar Producto</h2>
-        <button class="close-button" @click="volver">X</button>
         <form @submit.prevent="modificarProducto()">
           <div class="form-group">
             <label for="title">Título:</label>
@@ -46,11 +45,22 @@
     image: 'https://i.pravatar.cc',
     category: 'electronic',
   });
+  const modificarProducto=()=>{
+    alert ('Producto modificado')
+    producto.value = {
+        title: '',
+        price: '',
+        description: '',
+        image: '',
+        category: '',
+  }
+  router.push('/productos');
+}
   
   const volver = () => {
     router.push('/productos');
   };
-  
+
   </script>
 
   <style scoped>
@@ -113,16 +123,6 @@
     background-color: #0056b3;
   }
   
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 25px;
-    height: 25px;
-    border: transparent;
-    border-radius: 100%;
-    background: rgb(255, 145, 0);
-  }
   .h{
     position: absolute;
     top: 0px;

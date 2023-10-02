@@ -28,7 +28,7 @@
 
   const cargarProducto = () => {
     axios
-      .get('https://fakestoreapi.com/products/7')
+      .get('https://fakestoreapi.com/products/1')
       .then((response) => {
         producto.value = response.data;
       })

@@ -4,16 +4,19 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import producto from '../components/Producto.vue' ;
+import productoMo from '../components/ProductoMod.vue' ;
 
 const router = useRouter();
 const productos = ref([]);
 
-const mostrarProductoNuevo = localStorage.getItem('mostrarProductoNuevo') === 'true';
-
+const mostrarProductoNuevo = ref(localStorage.getItem('mostrarProductoNuevo') === 'true');
+const modVar =ref(localStorage.getItem('modVar') === 'true');
+  
 const agregarProductos = () => {
       router.push('/agregar'); 
       localStorage.setItem('mostrarProductoNuevo', 'true'); // Guarda el estado en localStorage
     };
+    
 const cargarProductos = () => {
   axios
     .get('https://fakestoreapi.com/products')
@@ -24,24 +27,36 @@ const cargarProductos = () => {
       console.error('Error al obtener los productos:', error);
     });
 };
-const modificarProducto = (id) => {
+const alternarModVar = () => {
+  modVar.value = !modVar.value;
+  localStorage.setItem('modVar', modVar.value.toString()); // Guardar el valor en localStorage
+};
+
+const modificarProducto = () => {
+  alternarModVar(); // Alternar el valor de modVar antes de redirigir
   router.push('/modificar');
 };
 
 const eliminarProducto = (id) => {
-  fetch(`https://fakestoreapi.com/products/${id}`, {
-    method: "DELETE"
-  })
-    .then(res => res.json())
-    .then(json => {
-      console.log(json);
-      cargarProductos();
-      alert("Producto eliminado")
+  if (confirm("¿Desea eliminar el producto?")) {
+    fetch(`https://fakestoreapi.com/products/${id}`, {
+      method: "DELETE"
     })
-    .catch(error => {
-      console.error('Error al eliminar el producto:', error);
-    });
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        alert("Producto eliminado");
+        mostrarProductoNuevo.value = false; 
+      })
+      .catch(error => {
+        console.error('Error al eliminar el producto:', error);
+      });
+    localStorage.removeItem('mostrarProductoNuevo');
+  } else {
+  
+  }
 };
+
 const quitarSesion = () => {
   localStorage.removeItem('mostrarProductoNuevo'); // Elimina la clave 'mostrarProductoNuevo'
   mostrarProductoNuevo = false; // Establece la variable en falso
@@ -60,7 +75,16 @@ onMounted(cargarProductos);
     </nav>
     <section class="section">
       <div v-if="mostrarProductoNuevo" class="proNue">
-        <producto></producto>
+        <div v-if="modVar">
+          <producto></producto>
+        </div>
+        <div v-else>
+          <productoMo></productoMo>
+        </div>
+      </div>
+      <div  v-if="mostrarProductoNuevo">
+            <button @click="modificarProducto">Modificar</button>
+            <button @click="eliminarProducto">Eliminar</button>
       </div>
       <div class="product-list">
         <div class="product-card" v-for="producto in productos" :key="producto.id">
