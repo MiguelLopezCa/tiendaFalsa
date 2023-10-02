@@ -57,10 +57,6 @@ const eliminarProducto = (id) => {
   }
 };
 
-const quitarSesion = () => {
-  localStorage.removeItem('mostrarProductoNuevo'); // Elimina la clave 'mostrarProductoNuevo'
-  mostrarProductoNuevo = false; // Establece la variable en falso
-};
 onMounted(cargarProductos);
 </script>
 
@@ -71,7 +67,6 @@ onMounted(cargarProductos);
     </header>
     <nav class="nav">
       <button @click="agregarProductos()">Agregar Productos</button>
-      <button @click="quitarSesion()">Reiniciar Productos</button>
     </nav>
     <section class="section">
       <div v-if="mostrarProductoNuevo" class="proNue">
