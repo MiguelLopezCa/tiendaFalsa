@@ -5,50 +5,70 @@ const router = createRouter({
   routes: [
     {
       path: '/', // Ruta raíz
-      component: () => import('@/views/Principal.vue'), // Componente correspondiente a la ruta
+      component: () => import('@/views/Principal.vue'),
       meta: {
-        title: 'Principal' // Opcional: puedes agregar metainformación personalizada
-      }
+        title: 'Principal',
+        requiresAuth: true, 
+      },
     },
     {
-      path: '/login', // Ejemplo de otra ruta
+      path: '/login', 
       component: () => import('../components/Login.vue'),
       meta: {
-        title: 'Incio de Sesion' // Metainformación para esta ruta
-      }
+        title: 'Inicio de Sesión',
+        requiresAuth: false, 
+      },
     },
-    
     {
-      path: '/productos', // Ejemplo de otra ruta
+      path: '/productos',
       component: () => import('../components/Productos.vue'),
       meta: {
-        title: 'Productos' // Metainformación para esta ruta
-      }
+        title: 'Productos',
+        requiresAuth: true, 
+      },
     },
-    
     {
-      path: '/agregar', // Ejemplo de otra ruta
+      path: '/agregar', 
       component: () => import('../components/AgregarPro.vue'),
       meta: {
-        title: 'Agregar Productos' // Metainformación para esta ruta
-      }
-    },
+        title: 'Agregar Productos',
+        requiresAuth: true,
+      },
+    },,
     {
-      path: '/modificar', // Ejemplo de otra ruta
+      path: '/modificar', 
       component: () => import('../components/ModificarPro.vue'),
       meta: {
-        title: 'Agregar Productos' // Metainformación para esta ruta
+        title: 'Modificar Productos',
+        requiresAuth: true,
       }
     },
     {
-      path: '/producto', // Ejemplo de otra ruta
+      path: '/producto', 
       component: () => import('../components/Producto.vue'),
       meta: {
-        title: 'Agregar Productos' // Metainformación para esta ruta
+        title: 'Producto',
+        requiresAuth: true, 
       }
     }
+  ],
+
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token');
+    if (token) {
   
-  ]
+      next();
+    } else {
+    
+      next('/login');
+    }
+  } else {
+   
+    next();
+  }
 });
 
 export default router;

@@ -29,13 +29,14 @@ const username = ref('');
 const password = ref('');
 
 const login = () => {
-  // Realizar una solicitud Axios para autenticar al usuario
   axios
     .post('https://fakestoreapi.com/auth/login', {
       username: username.value,
       password: password.value,
     })
     .then((response) => {
+      const token = response.data.token;
+      localStorage.setItem('token', token); 
       router.push('/productos');
     })
     .catch((error) => {
@@ -45,7 +46,7 @@ const login = () => {
 };
 </script>
 
-<style scoped>
+<style scoped> 
 .tot {
   display: grid;
   place-items: center;
@@ -92,16 +93,6 @@ button {
   display: grid;
   place-items: center;
   width: 50%;
-  padding: 10px;
-  background-color: #007bff;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  margin: auto;
-}
-
-button:hover {
-  background-color: #0056b3;
+  padding: 10
 }
 </style>
-

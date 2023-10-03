@@ -62,11 +62,11 @@
   }
   
   .product-info {
-    margin-left: 20px; /* Espacio entre la imagen y el texto */
+    margin-left: 20px;
   }
   
   .product-info h2 {
-    margin-left: 20px; /* Espacio entre la imagen y el texto */
+    margin-left: 20px; 
   }
   
   .product-info p {

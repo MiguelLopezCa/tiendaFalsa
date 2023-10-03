@@ -1,4 +1,5 @@
 <template>
+  <h2 class="mensa">Recuerde que la información diligenciada no se vera reflejada en la lista de productos </h2>
   <div class="product-container">
     
     <div class="form-container">
@@ -10,7 +11,7 @@
         </div>
         <div class="form-group">
           <label for="price">Precio:</label>
-          <input type="number" id="price" v-model="producto.price" required />
+          <input type="text" id="price" v-model="producto.price" required />
         </div>
         <div class="form-group">
           <label for="description">Descripción:</label>
@@ -22,7 +23,7 @@
         </div>
         <div class="form-group">
           <label for="image">Imagen:</label>
-          <input type="url" id="image" v-model="producto.image" />
+          <input type=" text" id="image" v-model="producto.image" />
         </div>
         <div class="button-container">
           <button  type="submit" class="button">Agregar</button>
@@ -79,6 +80,13 @@ const Guardar = async () => {
 </script>
 
 <style scoped>
+.mensa{
+  position: fixed;  
+  width: 200px;
+  border: fffff;
+  background: #f7f7f7;
+  opacity: 70%;
+}
 .product-container {
   text-align: center;
   padding: 20px;
